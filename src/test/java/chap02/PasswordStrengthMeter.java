@@ -3,12 +3,27 @@ package chap02;
 public class PasswordStrengthMeter {
     public PasswordStrength meter(String s) {
         if (s == null || s.isEmpty()) return PasswordStrength.INVALID;
+
         if (s.length() < 8) {
             return PasswordStrength.NORMAL;
         }
+
         boolean containsNum = meetsContaingingNumberCriteria(s);
         if (!containsNum) return PasswordStrength.NORMAL;
+
+        boolean containsUpp = meetsContainingUppercaseCriteria(s);
+        if (!containsUpp) return PasswordStrength.NORMAL;
+
         return PasswordStrength.STRONG;
+    }
+
+    private boolean meetsContainingUppercaseCriteria(String s) {
+        for (char ch : s.toCharArray()) {
+            if (Character.isUpperCase(ch)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean meetsContaingingNumberCriteria(String s) {
